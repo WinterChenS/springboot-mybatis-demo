@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.winter.mapper.ProjectMapper">
+    <sql id="TABLE_PROJECT">
+      PROJECT
+    </sql>
+    <sql id="BASE_COLUMN">
+        p.projId, p.parentId, p.level, p.taskName, p.durationDate,p.startDate,p.endDate,p.preTask,p.resource,p.importTime,p.batchNum
+    </sql>
+    <!-- 插入数据之后返回主键 -->
+    <insert id="addProjectSelective" useGeneratedKeys="true" keyProperty="projId" parameterType="com.winter.model.Project">
+        INSERT INTO
+        <include refid="TABLE_PROJECT"/>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="parentId != null">
+                parentId,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="taskName != null">
+                taskName,
+            </if>
+            <if test="durationDate != null">
+                durationDate,
+            </if>
+            <if test="startDate != null">
+                startDate,
+            </if>
+            <if test="endDate != null">
+                endDate,
+            </if>
+            <if test="preTask != null">
+                preTask,
+            </if>
+            <if test="resource != null">
+                resource,
+            </if>
+            <if test="importTime != null">
+                importTime,
+            </if>
+            <if test="importTime != null">
+                batchNum,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="parentId != null">
+                #{parentId, jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level, jdbcType=INTEGER},
+            </if>
+            <if test="taskName != null">
+                #{taskName, jdbcType=VARCHAR},
+            </if>
+            <if test="durationDate != null">
+                #{durationDate, jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                #{startDate, jdbcType=DATE},
+            </if>
+            <if test="endDate != null">
+                #{endDate, jdbcType=DATE},
+            </if>
+            <if test="preTask != null">
+                #{preTask, jdbcType=INTEGER},
+            </if>
+            <if test="resource != null">
+                #{resource, jdbcType=VARCHAR},
+            </if>
+            <if test="importTime != null">
+                #{importTime, jdbcType=DATE},
+            </if>
+            <if test="batchNum != null">
+                #{batchNum, jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!-- 获取项目 -->
+    <select id="getProjectsByBatchNum" resultType="com.winter.model.Project">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="TABLE_PROJECT"/> p
+        WHERE
+        p.batchNum = #{batchNum,jdbcType=VARCHAR}
+    </select>
+</mapper>
