@@ -1,7 +1,7 @@
 ## 项目介绍
 
 ### 项目架构
-* JDK 1.7
+* JDK 1.8
 * Springboot 1.5.6.RELEASE
 * Mybatis SpringBoot starter 1.3.0
 * thymeleaf 前端模板引擎
